@@ -1,4 +1,5 @@
 import pygame
+from pygame import Rect
 from pygame import Vector2
 
 import core
@@ -54,6 +55,7 @@ class Player:
             self.position.y = core.WINDOW_SIZE[1]
         if self.position.y > core.WINDOW_SIZE[1]:
             self.position.y = 0
+
 
 
 

@@ -7,10 +7,10 @@ def setup():
     core.fps = 30
     core.memory("partie", Partie())
     core.memory("projectile", [])
-
+    core.memory("etoiles", [])
     core.memory("partie").addPlayer()
     core.memory("partie").addasteroid()
-
+    core.memory("partie").addetoile()
 
 
 def  run():

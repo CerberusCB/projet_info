@@ -4,17 +4,19 @@ import time
 from pygame import Vector2
 
 import core
+import etoile
 from projectile import Projectile
-
 
 class Map:
     def __init__(self):
         self.maxplayer = 1
         self.maxasteroid = 10
+        self.maxetoiles = 20
         self.taille = Vector2(core.WINDOW_SIZE)
         self.joueurs = []
         self.asteroid = []
         self.projectile = []
+        self.etoiles =[]
 
     def spawn_player(self):
         pass
@@ -22,10 +24,13 @@ class Map:
     def show(self):
         for j in self.joueurs:
             j.show()
+        for e in self.etoiles:
+            e.show()
         for v in self.asteroid:
             v.show()
         for p in self.projectile:
             p.draw()
+
 
 
     def addjoueur(self, p):
@@ -35,6 +40,10 @@ class Map:
     def addasteroid(self, a):
         if len(self.asteroid) < self.maxasteroid:
             self.asteroid.append(a)
+
+    def addetoile(self,e):
+        if len(self.etoiles)<self.maxetoiles:
+            self.etoiles.append(e)
 
     def addprojectile(self, p):
         proj = Projectile()
