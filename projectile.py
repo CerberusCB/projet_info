@@ -15,7 +15,7 @@ class Projectile:
         self.position = Vector2()
         self.dureevie = 3
         self.startTime = time.time()
-        self.orientation = Vector2(-1,1)
+        #self.orientation = Vector2()
 
 
     def draw(self):

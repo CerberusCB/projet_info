@@ -39,19 +39,18 @@ class Map:
     def addprojectile(self, p):
         proj = Projectile()
         if len(self.projectile) > 0:
-            if time.time() - self.projectile[-1].startTime > 1:
-                orientation = Vector2(p.orientation)
-                orientation.scale_to_length(-20)
-                p2 = p.position + orientation
-                proj.acceleration = Vector2(p2)
-                self.position = Vector2(p2)
+            if time.time() - self.projectile[-1].startTime > 0.5:
                 self.projectile.append(proj)
-
-
         else:
             self.projectile.append(proj)
 
+        orientation = Vector2(core.getMouseLocation()) - p.position
+        orientation.scale_to_length(-20)
+        p2 = p.position + orientation
+        proj.acceleration = Vector2(p2)
+
         print(len(self.projectile))
+
 
 
 
