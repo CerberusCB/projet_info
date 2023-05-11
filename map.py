@@ -4,8 +4,7 @@ import time
 from pygame import Vector2
 
 import core
-from projetinfo.player import Player
-from projetinfo.projectile import Projectile
+from projectile import Projectile
 
 
 class Map:

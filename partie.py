@@ -3,9 +3,9 @@ import time
 from pygame import Vector2
 
 import core
-from projetinfo.asteroid import Asteroid
-from projetinfo.map import Map
-from projetinfo.player import Player
+from asteroid import Asteroid
+from map import Map
+from player import Player
 
 
 class Partie:

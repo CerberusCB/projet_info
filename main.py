@@ -1,8 +1,5 @@
 import core
-from projetinfo.map import Map
-from projetinfo.partie import Partie
-from projetinfo.player import Player
-#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
+from partie import Partie
 
 
 def setup():

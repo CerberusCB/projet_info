@@ -20,7 +20,7 @@ class Projectile:
 
     def draw(self):
         core.Draw.circle((255, 255, 255),self.position, self.taille)
-        orientation = Vector2(self.orientation
+        #orientation = Vector2(self.orientation
 
 
     def move(self):
