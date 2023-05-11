@@ -40,7 +40,7 @@ class Asteroid:
         self.p8 = Vector2(random.randint((self.size)/2 - 3, (self.size)/2 + 5))
         self.p8 = self.p8.rotate(315)
 
-
+#t
     def show(self):
         #core.Draw.circle(self.couleur, self.position, self.size)
         p1 = self.p1 + self.position

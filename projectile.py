@@ -23,7 +23,7 @@ class Projectile:
         core.Draw.circle((255, 255, 255),self.position, self.taille)
         #orientation = Vector2(self.orientation
 
-
+#t
     def move(self):
         self.vitesse += self.acceleration
         self.position += self.vitesse

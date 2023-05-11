@@ -34,7 +34,7 @@ class Map:
         for p in self.projectile:
             p.draw()
         core.Draw.text((255, 255, 255), ("SCORE : " + str(self.score)), ((core.WINDOW_SIZE[0]/2), 100), 20)
-
+#t
     def addjoueur(self, p):
         self.joueur = p
 

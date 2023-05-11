@@ -12,7 +12,7 @@ def setup():
 
 
 
-
+#t
 def  run():
     core.cleanScreen()
     core.memory("partie").show()

@@ -15,7 +15,7 @@ class Partie:
 
     def show(self):
         self.map.show()
-
+#t
     def shoot(self):
         if core.getMouseLeftClick():
             self.map.addprojectile()

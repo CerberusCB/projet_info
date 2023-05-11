@@ -45,7 +45,7 @@ class Player:
 
         core.Draw.text(self.couleur, ("LIFE REMAINING : " + str(self.life)), (200, 100), 20)
 
-
+#t
         core.Draw.polygon(self.couleur, (self.position, p1, p2, p3), 2)
         core.Draw.circle(self.couleur, core.getMouseLocation(), self.size, 2)
 

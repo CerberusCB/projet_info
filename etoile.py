@@ -5,7 +5,7 @@ from pygame import Rect
 from pygame import Vector2
 
 import core
-
+#t
 
 class Etoile:
     def __init__(self):
