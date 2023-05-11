@@ -1,3 +1,5 @@
+import time
+
 from pygame import Vector2
 
 import core
@@ -12,6 +14,14 @@ class Partie:
 
     def show(self):
         self.map.show()
+
+    def shoot(self):
+        p = Player()
+        if core.getMouseLeftClick():
+            self.map.addprojectile(p)
+        for a in self.map.projectile:
+            if time.time() - a.startTime > a.dureevie:
+                self.map.projectile.remove(a)
 
     def addPlayer(self):
         p = Player()
@@ -42,4 +52,6 @@ class Partie:
                 j.move()
         for a in self.map.asteroid:
             a.move()
+        for p in self.map.projectile:
+            p.move()
 

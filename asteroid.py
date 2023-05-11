@@ -3,14 +3,14 @@ import random
 from pygame import Vector2
 
 import core
-
+#random.randint(0, core.WINDOW_SIZE[0]), random.randint(0, core.WINDOW_SIZE[1])
 
 class Asteroid:
     def __init__(self):
         self.size = 50
         self.vmax = 7
         self.accmax = 2
-        self.position = Vector2(random.randint(0, core.WINDOW_SIZE[0]), random.randint(0, core.WINDOW_SIZE[1]))
+        self.position = Vector2()
         self.acceleration = Vector2(random.uniform(0, 0), random.uniform(0, 0))
         self.speed = Vector2(random.uniform(-7, 7), random.uniform(-7, 7))
         self.couleur = (255, 255, 255)
