@@ -3,6 +3,7 @@ import time
 from pygame import Vector2
 
 import core
+from player import Player
 
 
 class Projectile:
@@ -10,9 +11,9 @@ class Projectile:
         self.taille = 3
         self.vitesse = Vector2()
         self.acceleration = Vector2()
-        self.vmax = 10
+        self.vmax = 15
         self.accmax = 1
-        self.position = Vector2()
+        self.position =  Vector2()
         self.dureevie = 3
         self.startTime = time.time()
         #self.orientation = Vector2()
