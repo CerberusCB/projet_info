@@ -34,12 +34,6 @@ class Map:
 
     def addasteroid(self, a):
         if len(self.asteroid) < self.maxasteroid:
-
-            b = random.randint(0, 3)
-            if b == 0 :
-                self.asteroid.position
-
-
             self.asteroid.append(a)
 
     def addprojectile(self, p):

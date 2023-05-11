@@ -10,7 +10,15 @@ class Asteroid:
         self.size = 50
         self.vmax = 7
         self.accmax = 2
-        self.position = Vector2()
+        b = random.randint(0, 3)
+        if b == 0:
+            self.position = Vector2(0, random.uniform(0, core.WINDOW_SIZE[1]))
+        if b == 1:
+            self.position = Vector2(random.uniform(0, core.WINDOW_SIZE[0]), 0)
+        if b == 2:
+            self.position = Vector2(core.WINDOW_SIZE[0], random.uniform(0, core.WINDOW_SIZE[1]))
+        if b == 3:
+            self.position = Vector2(random.uniform(0, core.WINDOW_SIZE[0]), core.WINDOW_SIZE[1])
         self.acceleration = Vector2(random.uniform(0, 0), random.uniform(0, 0))
         self.speed = Vector2(random.uniform(-7, 7), random.uniform(-7, 7))
         self.couleur = (255, 255, 255)
