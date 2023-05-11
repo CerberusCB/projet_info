@@ -4,6 +4,7 @@ from pygame import Vector2
 
 import core
 from asteroid import Asteroid
+from etoile import Etoile
 from map import Map
 from player import Player
 
@@ -31,6 +32,11 @@ class Partie:
         for i in range(0, self.map.maxasteroid):
             self.map.addasteroid(Asteroid())
 
+    def addetoile(self):
+        #e = Etoile()
+        #self.map.addetoile(e)
+        for i in range(0, self.map.maxetoiles):
+           self.map.addetoile(Etoile())
 
 
     def sortie(self):
