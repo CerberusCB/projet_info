@@ -59,7 +59,18 @@ class Map:
         self.init_done = True
         if self.init_done ==True:
             self.asteroid.append(a)
-            self.projectile.append(proj)
+            #self.projectile.append(proj)
+
+
+    def addprojectile_player(self):
+        proj = Projectile()
+        orientation = Vector2(core.getMouseLocation()) - self.joueur.position
+        orientation.scale_to_length(30)
+        proj.position = Vector2(self.joueur.position) + orientation
+        proj.acceleration = Vector2(orientation)
+        if len(self.projectile) > 0:
+            if time.time() - self.projectile[-1].startTime > 0.5:
+                self.projectile.append(proj)
         else:
             self.projectile.append(proj)
 
