@@ -1,6 +1,7 @@
 import time
 
 from pygame import Vector2
+from pygame.rect import Rect
 
 import core
 import projectile
@@ -20,15 +21,29 @@ class Partie:
 
 
     def ecran_demarage(self):
-        core.Draw.text((255, 255, 255), "ASTEROID", (core.WINDOW_SIZE[0] /2, 200), 100)
 
-        core.Draw.text((255, 255, 255), "Launch Game", (core.WINDOW_SIZE[0] / 2, 500), 20)
+        coord_debut_asteroid = Vector2((core.WINDOW_SIZE[0] /2 - core.WINDOW_SIZE[0] /8, core.WINDOW_SIZE[1] /2 - core.WINDOW_SIZE[1] /4))
+        coord_debut_launch_game = Vector2((core.WINDOW_SIZE[0] /2 - core.WINDOW_SIZE[0] /10, core.WINDOW_SIZE[1] /2))
+        coord_debut_exit = Vector2((core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 15), core.WINDOW_SIZE[1] * 0.75)
+        rect1 = Rect(coord_debut_launch_game.x -2, coord_debut_launch_game.y +3, 350, 65)
+        rect2 = Rect(coord_debut_exit.x - 2, coord_debut_exit.y + 3, 127, 65)
 
-        core.Draw.text((255, 255, 255), "EXIT", (core.WINDOW_SIZE[0] / 2, 800), 20)
+        core.Draw.text((255, 255, 255), "ASTEROID", coord_debut_asteroid, 100)
+        core.Draw.text((255, 255, 255), "Launch Game", coord_debut_launch_game, 65)
+        core.Draw.text((255, 255, 255), "EXIT", coord_debut_exit, 65)
+        core.Draw.rect((255, 255, 255), rect2, 5)
+
+        if rect1.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect1, 5)
+            if core.getMouseLeftClick():
 
 
+
+
+        if time.time() - self.starttime > 5:
+            self.debut_game =True
         if self.debut_game == True:
-            core.memory("etat", Etat(1))
+            core.memory("etat", Etat.jeu)
 
     def show(self):
         self.map.show()

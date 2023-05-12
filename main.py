@@ -8,7 +8,7 @@ def setup():
     core.WINDOW_SIZE = [1920, 1080]
     core.fps = 30
     core.memory("partie", Partie())
-    core.memory("etat", Etat(0))
+    core.memory("etat", Etat.demarage)
 
     core.memory("partie").addPlayer()
     core.memory("partie").addasteroid()
@@ -28,8 +28,14 @@ def  run():
         core.memory("partie").sortie()
         core.memory("partie").move()
         core.memory("partie").shoot()
-        core.memory("partie").collision()
         core.memory("partie").score_game()
+        core.memory("partie").collision()
+
+    if core.memory("etat") == Etat.game_over:
+        exit()
+
+    if core.memory("etat") == Etat.win:
+        exit()
 
 
 
