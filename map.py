@@ -18,7 +18,7 @@ class Map:
         self.ast_detruit = 0
         self.enn_detruit = 0
         self.maxplayer = 1
-        self.maxasteroid = 0
+        self.maxasteroid = 15
         self.taille = Vector2(core.WINDOW_SIZE)
         self.joueur = None
         self.ennemie = None
@@ -81,7 +81,7 @@ class Map:
             enn_orientation.scale_to_length(30)
             enn_proj.position = Vector2(self.ennemie.position + enn_orientation)
             enn_proj.acceleration = Vector2(enn_orientation)
-            if time.time() - self.ennemie.shoottime > 0.1:
+            if time.time() - self.ennemie.shoottime > 2:
                 self.enn_projectile.append(enn_proj)
                 self.ennemie.shoottime = time.time()
 
@@ -149,8 +149,8 @@ class Map:
             self.nb_5sec += 1
             self.starttime = time.time()
         self.score = (self.ast_detruit * 10) + (self.nb_5sec * 10) + (self.joueur.life * 100) + (self.enn_detruit * 100)
-        #if (len(self.asteroid)) == 0:
-            #core.memory("etat", Etat.win)
+        if (len(self.asteroid)) == 0:
+            core.memory("etat", Etat.win)
 
 
 

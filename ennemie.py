@@ -9,7 +9,7 @@ import core
 class Ennemie:
     def __init__(self):
         self.size = 20
-        self.vmax = 15
+        self.vmax = 7
         self.accmax = 2
         self.direction_spawn = random.randint(0,2)
         if self.direction_spawn == 1:
@@ -29,7 +29,7 @@ class Ennemie:
             if self.direction_spawn == 1:
                 self.acceleration = Vector2(random.randint(-3, 3), 0)
             else:
-                self.acceleration = Vector2(0, random.randint(-3, 1))
+                self.acceleration = Vector2(0, random.randint(-3, 3))
         self.speed += self.acceleration
         self.position += self.speed
 
