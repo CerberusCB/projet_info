@@ -58,12 +58,6 @@ class Asteroid:
         self.speed += self.acceleration
         self.position += self.speed
 
-        if self.speed.length() > self.vmax:
-            self.speed.scale_to_length(self.vmax)
-
-        if self.acceleration.length() > self.accmax:
-            self.acceleration.scale_to_length(self.accmax)
-
 
     def on_edge(self):
         if self.position.x < 0:

@@ -21,10 +21,14 @@ class Partie:
 
     def shoot(self):
         if core.getMouseLeftClick():
-            self.map.addprojectile()
+            self.map.addprojectile_player()
         for a in self.map.projectile:
             if time.time() - a.startTime > a.dureevie:
                 self.map.projectile.remove(a)
+        for e in self.map.enn_projectile:
+            if time.time() - e.startTime > e.dureevie:
+                self.map.enn_projectile.remove(e)
+        self.map.addprojectile_ennemie()
 
     def addPlayer(self):
         p = Player()
@@ -65,6 +69,8 @@ class Partie:
             a.move()
         for p in self.map.projectile:
             p.move()
+        for e in self.map.enn_projectile:
+            e.move()
         if self.map.ennemie is not None:
             self.map.ennemie.move()
 

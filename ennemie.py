@@ -15,6 +15,7 @@ class Ennemie:
         self.acceleration = Vector2(random.randint(-3, 1), 0)
         self.speed = Vector2(0, 0)
         self.couleur = (200, 0, 200)
+        self.shoottime = time.time()
 
     def move(self):
         a = random.randint(0, 10)

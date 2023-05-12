@@ -63,10 +63,8 @@ class Player:
 
     def lose_life(self):
         if time.time() - self.starttime > 2:
-
             self.life -= 1
             self.starttime = time.time()
-            print(self.life)
 
 
 

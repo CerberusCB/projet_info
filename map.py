@@ -23,6 +23,7 @@ class Map:
         self.ennemie = None
         self.asteroid = []
         self.projectile = []
+        self.enn_projectile = []
         self.starttime = time.time()
         self.nb_5sec = 0
 
@@ -41,6 +42,8 @@ class Map:
             v.show()
         for p in self.projectile:
             p.draw()
+        for ep in self.enn_projectile:
+            ep.draw()
         core.Draw.text((255, 255, 255), ("SCORE : " + str(self.score)), ((core.WINDOW_SIZE[0]/2), 100), 20)
 
 # ----------------------------ajout des joueur, asteroid et projectile--------------------------------------------------------------
@@ -56,18 +59,21 @@ class Map:
         self.init_done = True
         if self.init_done ==True:
             self.asteroid.append(a)
-
-    def addprojectile(self):
-        proj = Projectile()
-        orientation = Vector2(core.getMouseLocation()) - self.joueur.position
-        orientation.scale_to_length(20)
-        proj.position = Vector2(self.joueur.position)
-        proj.acceleration = Vector2(orientation)
-        if len(self.projectile) > 0:
-            if time.time() - self.projectile[-1].startTime > 0.5:
-                self.projectile.append(proj)
+            self.projectile.append(proj)
         else:
             self.projectile.append(proj)
+
+    def addprojectile_ennemie(self):
+        enn_proj = Projectile()
+        if self.ennemie is not None:
+            enn_orientation = Vector2(self.joueur.position) - self.ennemie.position
+            enn_orientation.scale_to_length(30)
+            enn_proj.position = Vector2(self.ennemie.position + enn_orientation)
+            enn_proj.acceleration = Vector2(enn_orientation)
+            if time.time() - self.ennemie.shoottime > 5:
+                self.enn_projectile.append(enn_proj)
+                self.ennemie.shoottime = time.time()
+
 
 # ----------------------------verification des collision et division--------------------------------------------------------------
     def collision(self):
@@ -86,6 +92,8 @@ class Map:
             if self.joueur.position.distance_to(self.ennemie.position) - self.joueur.size < self.ennemie.size:
                 self.joueur.lose_life()
                 self.enn_detruit += 1
+                if self.joueur.life == 0:
+                    self.joueur = None
                 self.ennemie = None
             if self.ennemie is not None:
                 for p in self.projectile:
@@ -93,6 +101,13 @@ class Map:
                         self.projectile.remove(p)
                         self.ennemie = None
                         self.enn_detruit += 1
+        for e in self.enn_projectile:
+            if self.joueur.position.distance_to(e.position) - self.joueur.size < e.taille:
+                self.joueur.lose_life()
+                self.enn_projectile.remove(e)
+                if self.joueur.life == 0:
+                    self.joueur = None
+
 
 
     def division(self, a):
