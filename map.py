@@ -18,7 +18,7 @@ class Map:
         self.ast_detruit = 0
         self.enn_detruit = 0
         self.maxplayer = 1
-        self.maxasteroid = 10
+        self.maxasteroid = 0
         self.taille = Vector2(core.WINDOW_SIZE)
         self.joueur = None
         self.ennemie = None
@@ -149,8 +149,8 @@ class Map:
             self.nb_5sec += 1
             self.starttime = time.time()
         self.score = (self.ast_detruit * 10) + (self.nb_5sec * 10) + (self.joueur.life * 100) + (self.enn_detruit * 100)
-        if (len(self.asteroid)) == 0:
-            core.memory("etat", Etat.win)
+        #if (len(self.asteroid)) == 0:
+            #core.memory("etat", Etat.win)
 
 
 

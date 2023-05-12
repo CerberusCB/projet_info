@@ -9,9 +9,15 @@ import core
 class Ennemie:
     def __init__(self):
         self.size = 20
-        self.vmax = 7
+        self.vmax = 15
         self.accmax = 2
-        self.position = Vector2(core.WINDOW_SIZE[0], random.randint(20, core.WINDOW_SIZE[1] / 2))
+        self.direction_spawn = random.randint(0,2)
+        if self.direction_spawn == 1:
+            self.position = Vector2(core.WINDOW_SIZE[0], random.randint(20, core.WINDOW_SIZE[1] -20))
+            self.acceleration = Vector2(random.randint(-3, 1), 0)
+        else:
+            self.position = Vector2(random.randint(20, core.WINDOW_SIZE[0] -20), core.WINDOW_SIZE[1])
+            self.acceleration = Vector2(0, random.randint(-3, 1))
         self.acceleration = Vector2(random.randint(-3, 1), 0)
         self.speed = Vector2(0, 0)
         self.couleur = (200, 0, 200)
@@ -19,8 +25,11 @@ class Ennemie:
 
     def move(self):
         a = random.randint(0, 10)
-        if a == 5:
-            self.acceleration = Vector2(random.randint(-3, 1), 0)
+        if a >= 5:
+            if self.direction_spawn == 1:
+                self.acceleration = Vector2(random.randint(-3, 3), 0)
+            else:
+                self.acceleration = Vector2(0, random.randint(-3, 1))
         self.speed += self.acceleration
         self.position += self.speed
 
