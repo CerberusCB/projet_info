@@ -18,7 +18,7 @@ class Map:
         self.ast_detruit = 0
         self.enn_detruit = 0
         self.maxplayer = 1
-        self.maxasteroid = 15
+        self.maxasteroid = 1
         self.taille = Vector2(core.WINDOW_SIZE)
         self.joueur = None
         self.ennemie = None
@@ -77,6 +77,7 @@ class Map:
     def addprojectile_ennemie(self):
         enn_proj = Projectile()
         if self.ennemie is not None:
+            preshot = (Vector2(self.joueur.acceleration) * (self.joueur.position.distance_to(self.ennemie.position)) / 5)
             enn_orientation = Vector2(self.joueur.position) - self.ennemie.position
             enn_orientation.scale_to_length(30)
             enn_proj.position = Vector2(self.ennemie.position + enn_orientation)
