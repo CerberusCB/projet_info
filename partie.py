@@ -5,6 +5,7 @@ from pygame import Vector2
 import core
 import projectile
 from asteroid import Asteroid
+
 from map import Map
 from player import Player
 
@@ -15,15 +16,13 @@ class Partie:
 
     def show(self):
         self.map.show()
-#t
+
     def shoot(self):
         if core.getMouseLeftClick():
             self.map.addprojectile()
-            #print(projectile.vitesse)
         for a in self.map.projectile:
             if time.time() - a.startTime > a.dureevie:
                 self.map.projectile.remove(a)
-                self.map.score -= 5
 
     def addPlayer(self):
         p = Player()

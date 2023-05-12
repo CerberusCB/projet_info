@@ -8,7 +8,7 @@ import core
 
 class Player:
     def __init__(self):
-        self.life = 15
+        self.life = 3
         self.size = 17
         self.vmax = 7
         self.accmax = 2
@@ -18,6 +18,7 @@ class Player:
         self.couleur = (255, 255, 255)
         self.orientation = Vector2(-1, 1)
         self.starttime = time.time()
+        self.duree_invincibilite = 2
 
     def move(self):
         self.speed += self.acceleration
@@ -45,7 +46,7 @@ class Player:
 
         core.Draw.text(self.couleur, ("LIFE REMAINING : " + str(self.life)), (200, 100), 20)
 
-#t
+
         core.Draw.polygon(self.couleur, (self.position, p1, p2, p3), 2)
         core.Draw.circle(self.couleur, core.getMouseLocation(), self.size, 2)
 
@@ -62,6 +63,7 @@ class Player:
 
     def lose_life(self):
         if time.time() - self.starttime > 2:
+
             self.life -= 1
             self.starttime = time.time()
             print(self.life)

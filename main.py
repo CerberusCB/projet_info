@@ -3,7 +3,7 @@ from partie import Partie
 
 
 def setup():
-    core.WINDOW_SIZE = [800, 800]
+    core.WINDOW_SIZE = [1080, 1080]
     core.fps = 30
     core.memory("partie", Partie())
 
@@ -12,7 +12,7 @@ def setup():
 
 
 
-#t
+
 def  run():
     core.cleanScreen()
     core.memory("partie").show()

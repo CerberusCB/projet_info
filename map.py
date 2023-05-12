@@ -22,19 +22,24 @@ class Map:
         self.asteroid = []
         self.projectile = []
         self.starttime = time.time()
+        self.nb_5sec = 0
 
-    def spawn_player(self):
-        pass
 
+#----------------------------debut des fonction--------------------------------------------------------------
     def show(self):
         z=0
+        if (time.time() - self.joueur.starttime < self.joueur.duree_invincibilite) and self.joueur.life < 3:
+            self.joueur.couleur = (255, 255, 0)
+        else:
+            self.joueur.couleur = (255, 255, 255)
         self.joueur.show()
         for v in self.asteroid:
             v.show()
         for p in self.projectile:
             p.draw()
         core.Draw.text((255, 255, 255), ("SCORE : " + str(self.score)), ((core.WINDOW_SIZE[0]/2), 100), 20)
-#t
+
+# ----------------------------ajout des joueur, asteroid et projectile--------------------------------------------------------------
     def addjoueur(self, p):
         self.joueur = p
 
@@ -52,11 +57,12 @@ class Map:
         proj.position = Vector2(self.joueur.position)
         proj.acceleration = Vector2(orientation)
         if len(self.projectile) > 0:
-            if time.time() - self.projectile[-1].startTime > 0.1:
+            if time.time() - self.projectile[-1].startTime > 0.5:
                 self.projectile.append(proj)
         else:
             self.projectile.append(proj)
 
+# ----------------------------verification des collision et division--------------------------------------------------------------
     def collision(self):
         for a in self.asteroid:
             if self.joueur.position.distance_to(a.position) - self.joueur.size < a.size:
@@ -83,13 +89,12 @@ class Map:
                 b.speed = Vector2(random.uniform(-7, 7), random.uniform(-7, 7))
                 self.addasteroid(b)
 
+# ----------------------------calcul du score--------------------------------------------------------------
     def calcul_score(self):
-        self.score = (self.ast_detruit * 10)
         if time.time() - self.starttime > 5:
-            self.score += 10
+            self.nb_5sec += 1
             self.starttime = time.time()
-            print("time reset")
-        print(self.score)
+        self.score = (self.ast_detruit * 10) + (self.nb_5sec * 10) + (self.joueur.life * 100)
 
 
 
