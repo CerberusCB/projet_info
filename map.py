@@ -15,10 +15,12 @@ class Map:
         self.init_done = False
         self.score = 0
         self.ast_detruit = 0
+        self.enn_detruit = 0
         self.maxplayer = 1
-        self.maxasteroid = 10
+        self.maxasteroid = 0
         self.taille = Vector2(core.WINDOW_SIZE)
         self.joueur = None
+        self.ennemie = None
         self.asteroid = []
         self.projectile = []
         self.starttime = time.time()
@@ -28,6 +30,8 @@ class Map:
 #----------------------------debut des fonction--------------------------------------------------------------
     def show(self):
         z=0
+        if self.ennemie is not None:
+            self.ennemie.show()
         if (time.time() - self.joueur.starttime < self.joueur.duree_invincibilite) and self.joueur.life < 3:
             self.joueur.couleur = (255, 255, 0)
         else:
@@ -42,6 +46,9 @@ class Map:
 # ----------------------------ajout des joueur, asteroid et projectile--------------------------------------------------------------
     def addjoueur(self, p):
         self.joueur = p
+
+    def addennemie(self, e):
+        self.ennemie = e
 
     def addasteroid(self, a):
         if (len(self.asteroid) < self.maxasteroid) and self.init_done == False:
@@ -75,6 +82,18 @@ class Map:
                     self.asteroid.remove(a)
                     self.ast_detruit += 1
                     self.projectile.remove(p)
+        if self.ennemie is not None:
+            if self.joueur.position.distance_to(self.ennemie.position) - self.joueur.size < self.ennemie.size:
+                self.joueur.lose_life()
+                self.enn_detruit += 1
+                self.ennemie = None
+            if self.ennemie is not None:
+                for p in self.projectile:
+                    if p.position.distance_to(self.ennemie.position) - p.taille < self.ennemie.size:
+                        self.projectile.remove(p)
+                        self.ennemie = None
+                        self.enn_detruit += 1
+
 
     def division(self, a):
         for i in range(0, 2):
@@ -94,7 +113,7 @@ class Map:
         if time.time() - self.starttime > 5:
             self.nb_5sec += 1
             self.starttime = time.time()
-        self.score = (self.ast_detruit * 10) + (self.nb_5sec * 10) + (self.joueur.life * 100)
+        self.score = (self.ast_detruit * 10) + (self.nb_5sec * 10) + (self.joueur.life * 100) + (self.enn_detruit * 100)
 
 
 

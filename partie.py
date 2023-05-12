@@ -5,6 +5,7 @@ from pygame import Vector2
 import core
 import projectile
 from asteroid import Asteroid
+from ennemie import Ennemie
 
 from map import Map
 from player import Player
@@ -13,6 +14,7 @@ from player import Player
 class Partie:
     def __init__(self):
         self.map = Map()
+        self.starttime = time.time()
 
     def show(self):
         self.map.show()
@@ -32,12 +34,22 @@ class Partie:
         for i in range(0, self.map.maxasteroid):
             self.map.addasteroid(Asteroid())
 
+    def addennemie(self):
+        if self.map.ennemie is None:
+            if time.time() - self.starttime > 5:
+                e = Ennemie()
+                self.map.addennemie(e)
+        if self.map.ennemie is not None:
+            self.starttime = time.time()
+
 
 
     def sortie(self):
         self.map.joueur.on_edge()
         for a in self.map.asteroid:
             a.on_edge()
+        if self.map.ennemie is not None:
+            self.map.ennemie.on_edge()
 
     def move(self):
         if core.getKeyPressList("z"):
@@ -53,6 +65,9 @@ class Partie:
             a.move()
         for p in self.map.projectile:
             p.move()
+        if self.map.ennemie is not None:
+            self.map.ennemie.move()
+
 
     def collision(self):
         self.map.collision()

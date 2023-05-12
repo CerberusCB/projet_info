@@ -15,6 +15,7 @@ def setup():
 
 def  run():
     core.cleanScreen()
+    core.memory("partie").addennemie()
     core.memory("partie").show()
     core.memory("partie").sortie()
     core.memory("partie").move()
