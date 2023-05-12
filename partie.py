@@ -17,7 +17,6 @@ class Partie:
     def __init__(self):
         self.map = Map()
         self.starttime = time.time()
-        self.debut_game = False
 
 
     def ecran_demarage(self):
@@ -31,19 +30,17 @@ class Partie:
         core.Draw.text((255, 255, 255), "ASTEROID", coord_debut_asteroid, 100)
         core.Draw.text((255, 255, 255), "Launch Game", coord_debut_launch_game, 65)
         core.Draw.text((255, 255, 255), "EXIT", coord_debut_exit, 65)
-        core.Draw.rect((255, 255, 255), rect2, 5)
 
         if rect1.collidepoint(core.getMouseLocation()):
             core.Draw.rect((255, 255, 255), rect1, 5)
             if core.getMouseLeftClick():
+                core.memory("etat", Etat.jeu)
 
+        if rect2.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect2, 5)
+            if core.getMouseLeftClick():
+                exit()
 
-
-
-        if time.time() - self.starttime > 5:
-            self.debut_game =True
-        if self.debut_game == True:
-            core.memory("etat", Etat.jeu)
 
     def show(self):
         self.map.show()

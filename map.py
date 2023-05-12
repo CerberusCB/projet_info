@@ -81,7 +81,7 @@ class Map:
             enn_orientation.scale_to_length(30)
             enn_proj.position = Vector2(self.ennemie.position + enn_orientation)
             enn_proj.acceleration = Vector2(enn_orientation)
-            if time.time() - self.ennemie.shoottime > 5:
+            if time.time() - self.ennemie.shoottime > 0.1:
                 self.enn_projectile.append(enn_proj)
                 self.ennemie.shoottime = time.time()
 
