@@ -6,6 +6,7 @@ from pygame import Vector2
 import core
 import etoile
 from asteroid import Asteroid
+from etat import Etat
 from player import Player
 from projectile import Projectile
 
@@ -93,7 +94,7 @@ class Map:
                 if self.joueur.life == 0:
                     self.joueur = None
                     if self.joueur is None:
-                        exit()
+                        core.memory("etat", Etat(2))
             for p in self.projectile:
                 if p.position.distance_to(a.position) - p.taille < a.size:
                     self.division(a)
@@ -107,7 +108,7 @@ class Map:
                 if self.joueur.life == 0:
                     self.joueur = None
                     if self.joueur is None:
-                        exit()
+                        core.memory("etat", Etat(2))
                 self.ennemie = None
             if self.ennemie is not None:
                 for p in self.projectile:
@@ -123,7 +124,7 @@ class Map:
                 if self.joueur.life == 0:
                     self.joueur = None
                     if self.joueur is None:
-                        exit()
+                        core.memory("etat", Etat(2))
 
 
 
@@ -146,6 +147,8 @@ class Map:
             self.nb_5sec += 1
             self.starttime = time.time()
         self.score = (self.ast_detruit * 10) + (self.nb_5sec * 10) + (self.joueur.life * 100) + (self.enn_detruit * 100)
+        if (len(self.asteroid)) == 0:
+            core.memory("etat", Etat(3))
 
 
 

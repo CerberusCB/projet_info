@@ -6,6 +6,7 @@ import core
 import projectile
 from asteroid import Asteroid
 from ennemie import Ennemie
+from etat import Etat
 
 from map import Map
 from player import Player
@@ -15,6 +16,19 @@ class Partie:
     def __init__(self):
         self.map = Map()
         self.starttime = time.time()
+        self.debut_game = False
+
+
+    def ecran_demarage(self):
+        core.Draw.text((255, 255, 255), "ASTEROID", (core.WINDOW_SIZE[0] /2, 200), 100)
+
+        core.Draw.text((255, 255, 255), "Launch Game", (core.WINDOW_SIZE[0] / 2, 500), 20)
+
+        core.Draw.text((255, 255, 255), "EXIT", (core.WINDOW_SIZE[0] / 2, 800), 20)
+
+
+        if self.debut_game == True:
+            core.memory("etat", Etat(1))
 
     def show(self):
         self.map.show()
