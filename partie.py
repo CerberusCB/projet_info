@@ -40,7 +40,7 @@ class Partie:
 
     def addennemie(self):
         if self.map.ennemie is None:
-            if time.time() - self.starttime > 5:
+            if time.time() - self.starttime > 20:
                 e = Ennemie()
                 self.map.addennemie(e)
         if self.map.ennemie is not None:
@@ -56,6 +56,9 @@ class Partie:
             self.map.ennemie.on_edge()
 
     def move(self):
+        if core.getKeyPressList("n"):
+            for a in self.map.asteroid:
+                self.map.asteroid.remove(a)
         if core.getKeyPressList("z"):
             self.map.joueur.acceleration.y-=1
         if core.getKeyPressList("s"):

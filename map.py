@@ -17,7 +17,7 @@ class Map:
         self.ast_detruit = 0
         self.enn_detruit = 0
         self.maxplayer = 1
-        self.maxasteroid = 0
+        self.maxasteroid = 10
         self.taille = Vector2(core.WINDOW_SIZE)
         self.joueur = None
         self.ennemie = None
@@ -92,6 +92,8 @@ class Map:
                 self.joueur.lose_life()
                 if self.joueur.life == 0:
                     self.joueur = None
+                    if self.joueur is None:
+                        exit()
             for p in self.projectile:
                 if p.position.distance_to(a.position) - p.taille < a.size:
                     self.division(a)
@@ -104,19 +106,24 @@ class Map:
                 self.enn_detruit += 1
                 if self.joueur.life == 0:
                     self.joueur = None
+                    if self.joueur is None:
+                        exit()
                 self.ennemie = None
             if self.ennemie is not None:
                 for p in self.projectile:
-                    if p.position.distance_to(self.ennemie.position) - p.taille < self.ennemie.size:
-                        self.projectile.remove(p)
-                        self.ennemie = None
-                        self.enn_detruit += 1
+                    if self.ennemie is not None:
+                        if p.position.distance_to(self.ennemie.position) - p.taille < self.ennemie.size:
+                            self.projectile.remove(p)
+                            self.ennemie = None
+                            self.enn_detruit += 1
         for e in self.enn_projectile:
             if self.joueur.position.distance_to(e.position) - self.joueur.size < e.taille:
                 self.joueur.lose_life()
                 self.enn_projectile.remove(e)
                 if self.joueur.life == 0:
                     self.joueur = None
+                    if self.joueur is None:
+                        exit()
 
 
 

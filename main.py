@@ -1,4 +1,5 @@
 import core
+import partie
 from partie import Partie
 
 
@@ -15,6 +16,7 @@ def setup():
 
 def  run():
     core.cleanScreen()
+
     core.memory("partie").addennemie()
     core.memory("partie").show()
     core.memory("partie").sortie()
