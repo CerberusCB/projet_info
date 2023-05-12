@@ -59,7 +59,6 @@ class Map:
         self.init_done = True
         if self.init_done ==True:
             self.asteroid.append(a)
-            #self.projectile.append(proj)
 
 
     def addprojectile_player(self):

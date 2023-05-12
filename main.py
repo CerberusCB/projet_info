@@ -3,7 +3,7 @@ from partie import Partie
 
 
 def setup():
-    core.WINDOW_SIZE = [1400, 1050]
+    core.WINDOW_SIZE = [1920, 1080]
     core.fps = 30
     core.memory("partie", Partie())
 
