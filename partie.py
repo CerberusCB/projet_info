@@ -66,7 +66,7 @@ class Partie:
 
     def addennemie(self):
         if self.map.ennemie is None:
-            if time.time() - self.starttime > 5:
+            if time.time() - self.starttime > 20:
                 e = Ennemie()
                 self.map.addennemie(e)
         if self.map.ennemie is not None:
