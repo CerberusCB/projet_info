@@ -11,7 +11,7 @@ class Ennemie:
         self.size = 20
         self.vmax = 7
         self.accmax = 2
-        self.position = Vector2(core.WINDOW_SIZE[0], random.randint(0, core.WINDOW_SIZE[1] / 2))
+        self.position = Vector2(core.WINDOW_SIZE[0], random.randint(20, core.WINDOW_SIZE[1] / 2))
         self.acceleration = Vector2(random.randint(-3, 1), 0)
         self.speed = Vector2(0, 0)
         self.couleur = (200, 0, 200)
