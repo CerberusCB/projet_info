@@ -19,6 +19,7 @@ class Player:
         self.orientation = Vector2(-1, 1)
         self.starttime = time.time()
         self.duree_invincibilite = 2
+        self.fire_rate = 0.5
 
     def move(self):
         self.speed += self.acceleration
@@ -62,9 +63,10 @@ class Player:
             self.position.y = 0
 
     def lose_life(self):
-        if time.time() - self.starttime > 2:
+        if time.time() - self.starttime > self.duree_invincibilite:
             self.life -= 1
             self.starttime = time.time()
+            self.duree_invincibilite = 2
 
 
 

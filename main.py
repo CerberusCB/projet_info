@@ -6,7 +6,7 @@ from partie import Partie
 
 def setup():
     core.fullscreen = True
-    core.WINDOW_SIZE = [1920, 1080]
+    core.WINDOW_SIZE = [1900, 1000]
     core.fps = 30
     core.memory("partie", Partie())
     core.memory("etat", Etat.demarage)
@@ -30,6 +30,7 @@ def  run():
     if (core.memory("etat") == Etat.jeu):
         core.memory("partie").addasteroid()
         core.memory("partie").addennemie()
+        core.memory("partie").addbonus()
         core.memory("partie").show()
         core.memory("partie").sortie()
         core.memory("partie").move()
@@ -38,10 +39,10 @@ def  run():
         core.memory("partie").collision()
 
     if core.memory("etat") == Etat.game_over:
-        exit()
+        core.memory("partie").ecran_game_over()
 
     if core.memory("etat") == Etat.win:
-        exit()
+        core.memory("partie").ecran_win()
 
 
 

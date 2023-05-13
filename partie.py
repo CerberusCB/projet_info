@@ -6,6 +6,7 @@ from pygame.rect import Rect
 import core
 import projectile
 from asteroid import Asteroid
+from bonus import Bonus
 from ennemie import Ennemie
 from etat import Etat
 
@@ -36,6 +37,36 @@ class Partie:
             core.Draw.rect((255, 255, 255), rect1, 5)
             if core.getMouseLeftClick():
                 core.memory("etat", Etat.choix_mode)
+
+
+        if rect2.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect2, 5)
+            if core.getMouseLeftClick():
+                exit()
+
+    def ecran_game_over(self):
+
+        coord_debut_game_over = Vector2((core.WINDOW_SIZE[0] /2 - core.WINDOW_SIZE[0] /8, core.WINDOW_SIZE[1] /2 - core.WINDOW_SIZE[1] /4))
+        coord_debut_exit = Vector2((core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 15), core.WINDOW_SIZE[1] * 0.8)
+        rect2 = Rect(coord_debut_exit.x - 2, coord_debut_exit.y + 3, 127, 65)
+
+        core.Draw.text((255, 255, 255), "GAME OVER", coord_debut_game_over, 100)
+        core.Draw.text((255, 255, 255), "EXIT", coord_debut_exit, 65)
+
+
+        if rect2.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect2, 5)
+            if core.getMouseLeftClick():
+                exit()
+
+    def ecran_win(self):
+
+        coord_debut_game_over = Vector2((core.WINDOW_SIZE[0] /2 - core.WINDOW_SIZE[0] /8, core.WINDOW_SIZE[1] /2 - core.WINDOW_SIZE[1] /4))
+        coord_debut_exit = Vector2((core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 15), core.WINDOW_SIZE[1] * 0.8)
+        rect2 = Rect(coord_debut_exit.x - 2, coord_debut_exit.y + 3, 127, 65)
+
+        core.Draw.text((255, 255, 255), "YOU WIN", coord_debut_game_over, 100)
+        core.Draw.text((255, 255, 255), "EXIT", coord_debut_exit, 65)
 
 
         if rect2.collidepoint(core.getMouseLocation()):
@@ -115,6 +146,9 @@ class Partie:
             self.map.addasteroid(Asteroid(), False)
         self.map.init_done = True
 
+    def addbonus(self):
+        self.map.addbonus(Bonus())
+
     def addennemie(self):
         if self.difficulty > 1:
             if core.memory("etat") == Etat.jeu:
@@ -137,6 +171,8 @@ class Partie:
             a.on_edge()
         if self.map.ennemie is not None:
             self.map.ennemie.on_edge()
+        for b in self.map.bonus:
+            b.on_edge()
 
     def move(self):
         if core.getKeyPressList("n"):
@@ -159,6 +195,8 @@ class Partie:
             e.move()
         if self.map.ennemie is not None:
             self.map.ennemie.move()
+        for b in self.map.bonus:
+            b.move()
 
 
     def collision(self):

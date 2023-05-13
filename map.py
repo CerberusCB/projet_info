@@ -27,6 +27,9 @@ class Map:
         self.projectile = []
         self.enn_projectile = []
         self.starttime = time.time()
+        self.time_spawn_bonus = time.time()
+        self.starttime_bonus = time.time()
+        self.bonus = []
         self.nb_5sec = 0
 
 
@@ -35,7 +38,7 @@ class Map:
         z=0
         if self.ennemie is not None:
             self.ennemie.show()
-        if (time.time() - self.joueur.starttime < self.joueur.duree_invincibilite) and self.joueur.life < 3:
+        if (time.time() - self.joueur.starttime < self.joueur.duree_invincibilite):
             self.joueur.couleur = (255, 255, 0)
         else:
             self.joueur.couleur = (255, 255, 255)
@@ -46,6 +49,8 @@ class Map:
             p.draw()
         for ep in self.enn_projectile:
             ep.draw()
+        for b in self.bonus:
+            b.show()
         core.Draw.text((255, 255, 255), ("SCORE : " + str(self.score)), ((core.WINDOW_SIZE[0]/2), 100), 20)
 
 # ----------------------------ajout des joueur, asteroid et projectile--------------------------------------------------------------
@@ -55,8 +60,18 @@ class Map:
     def addennemie(self, e):
         self.ennemie = e
 
+    def addbonus(self, b):
+
+        if len(self.bonus) == 0:
+            if time.time() - self.time_spawn_bonus > 20:
+                if self.difficulty == 3:
+                    b.speed = Vector2(random.randint(-4, 4), random.randint(-4, 4))
+                self.bonus.append(b)
+        else:
+            self.time_spawn_bonus = time.time()
+
     def addasteroid(self, a, add):
-        if (len(self.asteroid) < self.maxasteroid):
+        if (len(self.asteroid) < self.maxasteroid) and self.init_done == False:
             self.asteroid.append(a)
         if self.init_done ==True and add == True:
             self.asteroid.append(a)
@@ -68,8 +83,10 @@ class Map:
         orientation.scale_to_length(30)
         proj.position = Vector2(self.joueur.position) + orientation
         proj.acceleration = Vector2(orientation)
+        if time.time() - self.starttime_bonus > 5:
+            self.joueur.fire_rate = 0.5
         if len(self.projectile) > 0:
-            if time.time() - self.projectile[-1].startTime > 0.5:
+            if time.time() - self.projectile[-1].startTime > self.joueur.fire_rate:
                 self.projectile.append(proj)
         else:
             self.projectile.append(proj)
@@ -101,10 +118,7 @@ class Map:
             if self.joueur.position.distance_to(a.position) - self.joueur.size < a.size:
                 self.joueur.lose_life()
                 if self.joueur.life == 0:
-                    self.joueur = None
-                    if self.joueur is None:
-                        core.memory("etat", Etat.game_over)
-                        break
+                    core.memory("etat", Etat.game_over)
             for p in self.projectile:
                 if p.position.distance_to(a.position) - p.taille < a.size:
                     self.division(a)
@@ -116,9 +130,7 @@ class Map:
                 self.joueur.lose_life()
                 self.enn_detruit += 1
                 if self.joueur.life == 0:
-                    self.joueur = None
-                    if self.joueur is None:
-                        core.memory("etat", Etat.game_over)
+                    core.memory("etat", Etat.game_over)
                 self.ennemie = None
             if self.ennemie is not None:
                 for p in self.projectile:
@@ -132,10 +144,12 @@ class Map:
                 self.joueur.lose_life()
                 self.enn_projectile.remove(e)
                 if self.joueur.life == 0:
-                    self.joueur = None
-                    if self.joueur is None:
-                        core.memory("etat", Etat.game_over)
-                        break
+                    core.memory("etat", Etat.game_over)
+        for b in self.bonus:
+            if self.joueur.position.distance_to(b.position) - self.joueur.size < b.size:
+                #b.action()
+                self.bonus.remove(b)
+
 
 
 
