@@ -5,13 +5,14 @@ from partie import Partie
 
 
 def setup():
+    core.fullscreen = True
     core.WINDOW_SIZE = [1920, 1080]
     core.fps = 30
     core.memory("partie", Partie())
     core.memory("etat", Etat.demarage)
 
     core.memory("partie").addPlayer()
-    core.memory("partie").addasteroid()
+
 
 
 
@@ -22,7 +23,12 @@ def  run():
     if core.memory("etat") == Etat.demarage:
         core.memory("partie").ecran_demarage()
 
-    if core.memory("etat") == Etat.jeu:
+    if core.memory("etat") == Etat.choix_mode:
+        core.memory("partie").ecran_choix_mode()
+
+
+    if (core.memory("etat") == Etat.jeu):
+        core.memory("partie").addasteroid()
         core.memory("partie").addennemie()
         core.memory("partie").show()
         core.memory("partie").sortie()

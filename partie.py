@@ -16,14 +16,15 @@ from player import Player
 class Partie:
     def __init__(self):
         self.map = Map()
+        self.difficulty = 0
         self.starttime = time.time()
 
 
     def ecran_demarage(self):
 
         coord_debut_asteroid = Vector2((core.WINDOW_SIZE[0] /2 - core.WINDOW_SIZE[0] /8, core.WINDOW_SIZE[1] /2 - core.WINDOW_SIZE[1] /4))
-        coord_debut_launch_game = Vector2((core.WINDOW_SIZE[0] /2 - core.WINDOW_SIZE[0] /10, core.WINDOW_SIZE[1] /2))
-        coord_debut_exit = Vector2((core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 15), core.WINDOW_SIZE[1] * 0.75)
+        coord_debut_launch_game = Vector2((core.WINDOW_SIZE[0] /2 - core.WINDOW_SIZE[0] /10, core.WINDOW_SIZE[1] * 0.6))
+        coord_debut_exit = Vector2((core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 15), core.WINDOW_SIZE[1] * 0.8)
         rect1 = Rect(coord_debut_launch_game.x -2, coord_debut_launch_game.y +3, 350, 65)
         rect2 = Rect(coord_debut_exit.x - 2, coord_debut_exit.y + 3, 127, 65)
 
@@ -34,12 +35,61 @@ class Partie:
         if rect1.collidepoint(core.getMouseLocation()):
             core.Draw.rect((255, 255, 255), rect1, 5)
             if core.getMouseLeftClick():
-                core.memory("etat", Etat.jeu)
+                core.memory("etat", Etat.choix_mode)
+
 
         if rect2.collidepoint(core.getMouseLocation()):
             core.Draw.rect((255, 255, 255), rect2, 5)
             if core.getMouseLeftClick():
                 exit()
+
+    def ecran_choix_mode(self):
+
+        coord_debut_choose_game_difficulty = Vector2(core.WINDOW_SIZE[0] /4, core.WINDOW_SIZE[1] /4 )
+        coord_debut_EASY = Vector2((core.WINDOW_SIZE[0] /4, core.WINDOW_SIZE[1] /2))
+        coord_debut_MEDIUM = Vector2((core.WINDOW_SIZE[0] / 2, core.WINDOW_SIZE[1] / 2))
+        coord_debut_HARD = Vector2((core.WINDOW_SIZE[0] * 0.75, core.WINDOW_SIZE[1] / 2))
+        coord_debut_exit = Vector2((core.WINDOW_SIZE[0] / 4 - core.WINDOW_SIZE[0] / 15), core.WINDOW_SIZE[1] * 0.8)
+        rect1 = Rect(coord_debut_EASY.x -2, coord_debut_EASY.y +3, 150, 65)
+        rect2 = Rect(coord_debut_exit.x - 2, coord_debut_exit.y + 3, 127, 65)
+        rect3 = Rect(coord_debut_MEDIUM.x - 2, coord_debut_MEDIUM.y + 3, 220, 65)
+        rect4 = Rect(coord_debut_HARD.x - 2, coord_debut_HARD.y + 3, 156, 65)
+
+        core.Draw.text((255, 255, 255), "Choose game difficulty", coord_debut_choose_game_difficulty, 100)
+        core.Draw.text((255, 255, 255), "EASY", coord_debut_EASY, 65)
+        core.Draw.text((255, 255, 255), "MEDIUM", coord_debut_MEDIUM, 65)
+        core.Draw.text((255, 255, 255), "HARD", coord_debut_HARD, 65)
+        core.Draw.text((255, 255, 255), "EXIT", coord_debut_exit, 65)
+
+
+        if rect1.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect1, 5)
+            if core.getMouseLeftClick():
+                self.difficulty = 1
+                self.map.difficulty = 1
+                self.map.maxasteroid = 8
+                core.memory("etat", Etat.jeu)
+
+        if rect3.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect3, 5)
+            if core.getMouseLeftClick():
+                self.difficulty = 2
+                self.map.difficulty = 2
+                self.map.maxasteroid = 10
+                core.memory("etat", Etat.jeu)
+
+        if rect4.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect4, 5)
+            if core.getMouseLeftClick():
+                self.difficulty = 3
+                self.map.difficulty = 3
+                self.map.maxasteroid = 15
+                core.memory("etat", Etat.jeu)
+
+        if rect2.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect2, 5)
+            if core.getMouseLeftClick():
+                core.memory("etat", Etat.demarage)
 
 
     def show(self):
@@ -62,16 +112,23 @@ class Partie:
 
     def addasteroid(self):
         for i in range(0, self.map.maxasteroid):
-            self.map.addasteroid(Asteroid())
+            self.map.addasteroid(Asteroid(), False)
+        self.map.init_done = True
 
     def addennemie(self):
-        if self.map.ennemie is None:
-            if time.time() - self.starttime > 20:
-                e = Ennemie()
-                self.map.addennemie(e)
-        if self.map.ennemie is not None:
-            self.starttime = time.time()
-
+        if self.difficulty > 1:
+            if core.memory("etat") == Etat.jeu:
+                if self.map.ennemie is None:
+                    if self.difficulty == 2:
+                        if time.time() - self.starttime > 20:
+                            e = Ennemie()
+                            self.map.addennemie(e)
+                    if self.difficulty == 3:
+                        if time.time() - self.starttime > 5:
+                            e = Ennemie()
+                            self.map.addennemie(e)
+                if self.map.ennemie is not None:
+                    self.starttime = time.time()
 
 
     def sortie(self):

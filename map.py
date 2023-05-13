@@ -14,11 +14,12 @@ from projectile import Projectile
 class Map:
     def __init__(self):
         self.init_done = False
+        self.difficulty = 0
         self.score = 0
         self.ast_detruit = 0
         self.enn_detruit = 0
         self.maxplayer = 1
-        self.maxasteroid = 15
+        self.maxasteroid = 1
         self.taille = Vector2(core.WINDOW_SIZE)
         self.joueur = None
         self.ennemie = None
@@ -54,11 +55,10 @@ class Map:
     def addennemie(self, e):
         self.ennemie = e
 
-    def addasteroid(self, a):
-        if (len(self.asteroid) < self.maxasteroid) and self.init_done == False:
+    def addasteroid(self, a, add):
+        if (len(self.asteroid) < self.maxasteroid):
             self.asteroid.append(a)
-        self.init_done = True
-        if self.init_done ==True:
+        if self.init_done ==True and add == True:
             self.asteroid.append(a)
 
 
@@ -78,13 +78,21 @@ class Map:
         enn_proj = Projectile()
         if self.ennemie is not None:
             preshot = (Vector2(self.joueur.acceleration) * (self.joueur.position.distance_to(self.ennemie.position)) / 5)
-            enn_orientation = Vector2(self.joueur.position) - self.ennemie.position
+            if self.difficulty == 3:
+                enn_orientation = Vector2(self.joueur.position) + preshot - self.ennemie.position
+            else:
+                enn_orientation = Vector2(self.joueur.position) - self.ennemie.position
             enn_orientation.scale_to_length(30)
             enn_proj.position = Vector2(self.ennemie.position + enn_orientation)
             enn_proj.acceleration = Vector2(enn_orientation)
-            if time.time() - self.ennemie.shoottime > 2:
-                self.enn_projectile.append(enn_proj)
-                self.ennemie.shoottime = time.time()
+            if self.difficulty == 2:
+                if time.time() - self.ennemie.shoottime > 3:
+                    self.enn_projectile.append(enn_proj)
+                    self.ennemie.shoottime = time.time()
+            if self.difficulty == 3:
+                if time.time() - self.ennemie.shoottime > 1:
+                    self.enn_projectile.append(enn_proj)
+                    self.ennemie.shoottime = time.time()
 
 
 # ----------------------------verification des collision et division--------------------------------------------------------------
@@ -137,12 +145,12 @@ class Map:
                 b = Asteroid(36)
                 b.position = Vector2(a.position)
                 b.speed = Vector2(random.uniform(-7, 7), random.uniform(-7, 7))
-                self.addasteroid(b)
+                self.addasteroid(b, True)
             if a.size == 36 :
                 b = Asteroid(24)
                 b.position = Vector2(a.position)
                 b.speed = Vector2(random.uniform(-7, 7), random.uniform(-7, 7))
-                self.addasteroid(b)
+                self.addasteroid(b, True)
 
 # ----------------------------calcul du score--------------------------------------------------------------
     def calcul_score(self):
@@ -152,6 +160,5 @@ class Map:
         self.score = (self.ast_detruit * 10) + (self.nb_5sec * 10) + (self.joueur.life * 100) + (self.enn_detruit * 100)
         if (len(self.asteroid)) == 0:
             core.memory("etat", Etat.win)
-
 
 
