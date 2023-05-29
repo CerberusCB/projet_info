@@ -29,17 +29,6 @@ class Bonus:
         if self.position.y > core.WINDOW_SIZE[1]:
             self.position.y = 0
 
-    def action(self):
-
-        if self.type == 0:
-            map.joueur.life += 1
-        if self.type == 1:
-            map.joueur.duree_invincibilite = 5
-            map.joueur.starttime = time.time()
-        if self.type == 2:
-            map.starttime_bonus = time.time()
-            map.joueur.fire_rate = 0.1
-
     def show(self):
         core.Draw.circle(self.couleur, self.position, self.size)
 

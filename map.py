@@ -147,7 +147,14 @@ class Map:
                     core.memory("etat", Etat.game_over)
         for b in self.bonus:
             if self.joueur.position.distance_to(b.position) - self.joueur.size < b.size:
-                #b.action()
+                if b.type == 0:
+                    self.joueur.life += 1
+                if b.type == 1:
+                    self.joueur.duree_invincibilite = 5
+                    self.joueur.starttime = time.time()
+                if b.type == 2:
+                    self.starttime_bonus = time.time()
+                    self.joueur.fire_rate = 0.1
                 self.bonus.remove(b)
 
 
