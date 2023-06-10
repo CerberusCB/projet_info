@@ -46,33 +46,32 @@ class Partie:
 
     def ecran_game_over(self):
 
-        coord_debut_game_over = Vector2((core.WINDOW_SIZE[0] /2 - core.WINDOW_SIZE[0] /8, core.WINDOW_SIZE[1] /2 - core.WINDOW_SIZE[1] /4))
-        coord_debut_exit = Vector2((core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 15), core.WINDOW_SIZE[1] * 0.8)
-        rect2 = Rect(coord_debut_exit.x - 2, coord_debut_exit.y + 3, 127, 65)
+        coord_debut_game_over = Vector2((core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 7, core.WINDOW_SIZE[1] / 3))
+        coord_ecran_score = Vector2((core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 14, core.WINDOW_SIZE[1] / 1.5))
+        rect2 = Rect(coord_ecran_score.x - 2, coord_ecran_score.y + 3, 260, 65)
 
         core.Draw.text((255, 255, 255), "GAME OVER", coord_debut_game_over, 100)
-        core.Draw.text((255, 255, 255), "EXIT", coord_debut_exit, 65)
-
+        core.Draw.text((255, 255, 255), "VOIR SCORE", coord_ecran_score, 50)
 
         if rect2.collidepoint(core.getMouseLocation()):
             core.Draw.rect((255, 255, 255), rect2, 5)
             if core.getMouseLeftClick():
-                exit()
+                core.memory("etat", Etat.affichage_score)
 
     def ecran_win(self):
 
-        coord_debut_game_over = Vector2((core.WINDOW_SIZE[0] /2 - core.WINDOW_SIZE[0] /8, core.WINDOW_SIZE[1] /2 - core.WINDOW_SIZE[1] /4))
-        coord_debut_exit = Vector2((core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 15), core.WINDOW_SIZE[1] * 0.8)
-        rect2 = Rect(coord_debut_exit.x - 2, coord_debut_exit.y + 3, 127, 65)
+        coord_debut_game_over = Vector2(
+            (core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 8, core.WINDOW_SIZE[1] / 2 - core.WINDOW_SIZE[1] / 4))
+        coord_debut_see_score = Vector2((core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 15), core.WINDOW_SIZE[1] * 0.8)
+        rect2 = Rect(coord_debut_see_score.x - 2, coord_debut_see_score.y + 3, 350, 65)
 
         core.Draw.text((255, 255, 255), "YOU WIN", coord_debut_game_over, 100)
-        core.Draw.text((255, 255, 255), "EXIT", coord_debut_exit, 65)
-
+        core.Draw.text((255, 255, 255), "SEE SCORE", coord_debut_see_score, 65)
 
         if rect2.collidepoint(core.getMouseLocation()):
             core.Draw.rect((255, 255, 255), rect2, 5)
             if core.getMouseLeftClick():
-                exit()
+                core.memory("etat", Etat.affichage_score)
 
     def ecran_choix_mode(self):
 
@@ -121,6 +120,26 @@ class Partie:
             core.Draw.rect((255, 255, 255), rect2, 5)
             if core.getMouseLeftClick():
                 core.memory("etat", Etat.demarage)
+    def ecran_affichage_score(self):
+        coord_affichage_rejouer =Vector2(core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 4, core.WINDOW_SIZE[1] * (2/3))
+        coord_affichage_exit_btn =Vector2(core.WINDOW_SIZE[0] / 2 + core.WINDOW_SIZE[0] / 4, core.WINDOW_SIZE[1] * (2/3))
+
+        rect1 = Rect(coord_affichage_exit_btn.x - 2, coord_affichage_exit_btn.y + 3, 100, 65)
+        rect2 = Rect(coord_affichage_rejouer.x - 2, coord_affichage_rejouer.y + 3, 170, 65)
+
+        core.Draw.text((255, 255, 255), ("YOUR SCORE : " + str(self.map.score)), ((core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0]/7), core.WINDOW_SIZE[1]/3), 75)
+        core.Draw.text((255, 255, 255), "REPLAY", coord_affichage_rejouer, 50)
+        core.Draw.text((255, 255, 255), "EXIT", coord_affichage_exit_btn, 50)
+
+        if rect1.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect1, 5)
+            if core.getMouseLeftClick():
+                exit()
+
+        if rect2.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect2, 5)
+            if core.getMouseLeftClick():
+                core.memory("etat", Etat.choix_mode)
 
 
     def show(self):
@@ -204,3 +223,25 @@ class Partie:
 
     def score_game(self):
         self.map.calcul_score()
+
+    def reset_partie(self):
+        self.map.init_done=False
+        self.map.score = 0
+        self.map.starttime = time.time()
+        self.map.time_spawn_bonus = time.time()
+        self.map.starttime_bonus = time.time()
+        self.map.nb_5sec = 0
+        self.map.ast_detruit = 0
+        self.map.enn_detruit = 0
+        self.map.joueur.life = 3
+        self.map.ennemie = None
+        self.map.joueur.position=Vector2(core.WINDOW_SIZE[0] / 2, core.WINDOW_SIZE[1] / 2)
+
+        for a in self.map.asteroid:
+            self.map.asteroid.remove(a)
+        for p in self.map.projectile:
+            self.map.projectile.remove(p)
+        for e in self.map.enn_projectile:
+            self.map.enn_projectile.remove(e)
+        for b in self.map.bonus:
+            self.map.bonus.remove(b)

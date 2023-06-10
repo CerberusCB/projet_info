@@ -25,6 +25,7 @@ def  run():
 
     if core.memory("etat") == Etat.choix_mode:
         core.memory("partie").ecran_choix_mode()
+        core.memory("partie").reset_partie()
 
 
     if (core.memory("etat") == Etat.jeu):
@@ -44,7 +45,8 @@ def  run():
     if core.memory("etat") == Etat.win:
         core.memory("partie").ecran_win()
 
-
+    if core.memory("etat") == Etat.affichage_score:
+        core.memory("partie").ecran_affichage_score()
 
 
 core.main(setup, run)

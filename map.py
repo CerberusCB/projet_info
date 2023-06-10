@@ -154,7 +154,7 @@ class Map:
                     self.joueur.starttime = time.time()
                 if b.type == 2:
                     self.starttime_bonus = time.time()
-                    self.joueur.fire_rate = 0.1
+                    self.joueur.fire_rate = 0.25
                 self.bonus.remove(b)
 
 
