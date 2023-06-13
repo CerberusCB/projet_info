@@ -105,7 +105,7 @@ class Partie:
             if core.getMouseLeftClick():
                 self.difficulty = 2
                 self.map.difficulty = 2
-                self.map.maxasteroid = 10
+                self.map.maxasteroid = 11
                 core.memory("etat", Etat.jeu)
 
         if rect4.collidepoint(core.getMouseLocation()):
@@ -116,10 +116,20 @@ class Partie:
                 self.map.maxasteroid = 15
                 core.memory("etat", Etat.jeu)
 
+        if core.getKeyPressList("u") and core.getKeyPressList("h"):
+            self.difficulty = 4
+            self.map.difficulty = 4
+            self.map.maxasteroid = 20
+            core.memory("etat", Etat.jeu)
+
+
         if rect2.collidepoint(core.getMouseLocation()):
             core.Draw.rect((255, 255, 255), rect2, 5)
             if core.getMouseLeftClick():
                 core.memory("etat", Etat.demarage)
+
+
+
     def ecran_affichage_score(self):
         coord_affichage_rejouer =Vector2(core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 4, core.WINDOW_SIZE[1] * (2/3))
         coord_affichage_exit_btn =Vector2(core.WINDOW_SIZE[0] / 2 + core.WINDOW_SIZE[0] / 4, core.WINDOW_SIZE[1] * (2/3))
@@ -180,6 +190,10 @@ class Partie:
                         if time.time() - self.starttime > 5:
                             e = Ennemie()
                             self.map.addennemie(e)
+                    if self.difficulty == 4:
+                        if time.time() - self.starttime > 1:
+                            e = Ennemie()
+                            self.map.addennemie(e)
                 if self.map.ennemie is not None:
                     self.starttime = time.time()
 
@@ -236,6 +250,8 @@ class Partie:
         self.map.joueur.life = 3
         self.map.ennemie = None
         self.map.joueur.position=Vector2(core.WINDOW_SIZE[0] / 2, core.WINDOW_SIZE[1] / 2)
+        self.map.joueur.acceleration = Vector2(0, 0)
+        self.map.joueur.speed = Vector2(0, 0)
 
         for a in self.map.asteroid:
             self.map.asteroid.remove(a)

@@ -93,6 +93,7 @@ class Map:
 
     def addprojectile_ennemie(self):
         enn_proj = Projectile()
+        enn_proj2 = Projectile()
         if self.ennemie is not None:
             preshot = (Vector2(self.joueur.acceleration) * (self.joueur.position.distance_to(self.ennemie.position)) / 5)
             if self.difficulty == 3:
@@ -109,6 +110,21 @@ class Map:
             if self.difficulty == 3:
                 if time.time() - self.ennemie.shoottime > 1:
                     self.enn_projectile.append(enn_proj)
+                    self.ennemie.shoottime = time.time()
+
+
+            if self.difficulty == 4:
+                enn_orientation = Vector2(self.joueur.position) + preshot - self.ennemie.position
+                enn_orientation2 = Vector2(self.joueur.position) - self.ennemie.position
+                enn_orientation.scale_to_length(30)
+                enn_orientation2.scale_to_length(30)
+                enn_proj.position = Vector2(self.ennemie.position + enn_orientation)
+                enn_proj.acceleration = Vector2(enn_orientation)
+                enn_proj2.position = Vector2(self.ennemie.position + enn_orientation2)
+                enn_proj2.acceleration = Vector2(enn_orientation2)
+                if time.time() - self.ennemie.shoottime > 1:
+                    self.enn_projectile.append(enn_proj)
+                    self.enn_projectile.append(enn_proj2)
                     self.ennemie.shoottime = time.time()
 
 
