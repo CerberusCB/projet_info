@@ -38,6 +38,7 @@ def  run():
         core.memory("partie").shoot()
         core.memory("partie").score_game()
         core.memory("partie").collision()
+        core.memory("partie").gestion_pause()
 
     if core.memory("etat") == Etat.game_over:
         core.memory("partie").ecran_game_over()
@@ -48,5 +49,7 @@ def  run():
     if core.memory("etat") == Etat.affichage_score:
         core.memory("partie").ecran_affichage_score()
 
+    if core.memory("etat") == Etat.pause:
+        core.memory("partie").ecran_pause()
 
 core.main(setup, run)

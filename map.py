@@ -1,5 +1,6 @@
 import random
 import time
+import pygame
 
 from pygame import Vector2
 
@@ -9,7 +10,6 @@ from asteroid import Asteroid
 from etat import Etat
 from player import Player
 from projectile import Projectile
-
 
 class Map:
     def __init__(self):
@@ -31,7 +31,6 @@ class Map:
         self.starttime_bonus = time.time()
         self.bonus = []
         self.nb_5sec = 0
-
 
 #----------------------------debut des fonction--------------------------------------------------------------
     def show(self):

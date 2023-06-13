@@ -151,6 +151,48 @@ class Partie:
             if core.getMouseLeftClick():
                 core.memory("etat", Etat.choix_mode)
 
+    def gestion_pause(self):
+        if core.getKeyPressList("e"):
+            core.memory("etat", Etat.pause)
+
+    def ecran_pause(self):
+        coord_affichage_continuer = Vector2(core.WINDOW_SIZE[0] / 2 - core.WINDOW_SIZE[0] / 4, core.WINDOW_SIZE[1] * (2 / 3))
+        coord_affichage_exit_btn = Vector2(core.WINDOW_SIZE[0] / 2 + core.WINDOW_SIZE[0] / 4, core.WINDOW_SIZE[1] * (2 / 3))
+        coord_restart = Vector2(core.WINDOW_SIZE[0] / 2,core.WINDOW_SIZE[1] * (2 / 3))
+        coord_retourmenu = Vector2(core.WINDOW_SIZE[0]/2, core.WINDOW_SIZE[1]*(3/4))
+
+        core.Draw.text((255, 255, 255), "PAUSE", ((core.WINDOW_SIZE[0] / 2 ), core.WINDOW_SIZE[1]/3), 75)
+        core.Draw.text((255, 255, 255), "CONTINUE", coord_affichage_continuer, 50)
+        core.Draw.text((255, 255, 255), "RESTART", coord_restart, 50)
+        core.Draw.text((255, 255, 255), "EXIT", coord_affichage_exit_btn, 50)
+        core.Draw.text((255, 255, 255), "RETOUR MENU", coord_retourmenu, 50)
+
+        rect1 = Rect(coord_affichage_exit_btn.x - 2, coord_affichage_exit_btn.y + 3, 100, 65)
+        rect2 = Rect(coord_affichage_continuer.x - 2, coord_affichage_continuer.y + 3, 220, 65)
+        rect3 = Rect(coord_restart.x - 2, coord_restart.y + 3, 200, 65)
+        rect4 = Rect(coord_restart.x - 2, coord_retourmenu.y + 3, 310, 65)
+
+        if rect1.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect1, 5)
+            if core.getMouseLeftClick():
+                exit()
+
+        if rect2.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect2, 5)
+            if core.getMouseLeftClick():
+                core.memory("etat", Etat.jeu)
+
+        if rect3.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect3, 5)
+            if core.getMouseLeftClick():
+                self.reset_partie()
+                core.memory("etat", Etat.jeu)
+
+        if rect4.collidepoint(core.getMouseLocation()):
+            core.Draw.rect((255, 255, 255), rect4, 5)
+            if core.getMouseLeftClick():
+                self.reset_partie()
+                core.memory("etat", Etat.choix_mode)
 
     def show(self):
         self.map.show()

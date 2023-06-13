@@ -8,4 +8,4 @@ class Etat(Enum):
     win = 3,
     choix_mode = 4
     affichage_score = 5
-
+    pause = 6
